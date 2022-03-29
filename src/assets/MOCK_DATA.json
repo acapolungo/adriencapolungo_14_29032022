@@ -1,0 +1,10 @@
+[{"id":1,"first_name":"Ernesta","last_name":"Ismead","date_of_birth":"29/06/1970","street":"Nobel","city":"Plano","state":"Texas","zipcode":"75074","department":"Services","start_date":"24/08/2021"},
+{"id":2,"first_name":"Quent","last_name":"Rigmond","date_of_birth":"09/04/1986","street":"Graceland","city":"Roanoke","state":"Virginia","zipcode":"24009","department":"Product Management","start_date":"13/07/2021"},
+{"id":3,"first_name":"Mikel","last_name":"Nadin","date_of_birth":"26/07/2014","street":"Glendale","city":"Savannah","state":"Georgia","zipcode":"31410","department":"Services","start_date":"26/07/2021"},
+{"id":4,"first_name":"Jeramie","last_name":"Lardner","date_of_birth":"15/10/2012","street":"High Crossing","city":"New York City","state":"New York","zipcode":"10060","department":"Human Resources","start_date":"01/04/2021"},
+{"id":5,"first_name":"Junina","last_name":"Woodcroft","date_of_birth":"05/02/1994","street":"Prairie Rose","city":"Irvine","state":"California","zipcode":"92612","department":"Engineering","start_date":"09/02/2022"},
+{"id":6,"first_name":"Drew","last_name":"Ridett","date_of_birth":"21/02/2001","street":"Spohn","city":"Santa Barbara","state":"California","zipcode":"93111","department":"Accounting","start_date":"17/02/2022"},
+{"id":7,"first_name":"Rochester","last_name":"Davidovitz","date_of_birth":"14/07/2007","street":"Nobel","city":"Iowa City","state":"Iowa","zipcode":"52245","department":"Human Resources","start_date":"15/10/2021"},
+{"id":8,"first_name":"Gillian","last_name":"Fautley","date_of_birth":"02/03/1975","street":"David","city":"San Francisco","state":"California","zipcode":"94142","department":"Legal","start_date":"23/05/2021"},
+{"id":9,"first_name":"Tandie","last_name":"Pinniger","date_of_birth":"31/12/2011","street":"Hollow Ridge","city":"Columbus","state":"Georgia","zipcode":"31998","department":"Business Development","start_date":"02/11/2021"},
+{"id":10,"first_name":"William","last_name":"Hobbema","date_of_birth":"25/07/2020","street":"Huxley","city":"Dallas","state":"Texas","zipcode":"75260","department":"Support","start_date":"02/12/2021"}]
