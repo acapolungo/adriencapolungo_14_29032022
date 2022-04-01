@@ -16,24 +16,3 @@ body {
   margin: 0 auto;
   max-width: 1024px;
 }
-
-.table {
-  width: 100%;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-}
-.table__title {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 20%;
-}
-.table__container {
-  width: 60%;
-  height: 80%;
-  margin: 0 auto;
-}

@@ -1,15 +1,17 @@
+// import {format} from 'date-fns'
+
 export const COLUMNS = [
     {
         Header : 'First Name',
-        accessor: 'last_name'
+        accessor: 'firstName'
     },
     {
         Header : 'Last Name',
-        accessor: 'first_name'
+        accessor: 'lastName'
     },
     {
         Header : 'Start Date',
-        accessor: 'start_date'
+        accessor: 'startDate'
     },
     {
         Header : 'Department',
@@ -17,7 +19,8 @@ export const COLUMNS = [
     },
     {
         Header : 'Date of Birth',
-        accessor: 'date_of_birth'
+        accessor: 'birthdate',
+        // Cell: ({value}) => { return format(new Date(value, 'dd/MM/yyyy'))}
     },
     {
         Header : 'Street',
@@ -29,14 +32,18 @@ export const COLUMNS = [
     },
     {
         Header : 'State',
-        accessor: 'state'
+        accessor: 'stateName'
     },
     {
         Header : 'Zipcode',
         accessor: 'zipcode'
     },
-    {
-        Header : 'Edit',
-        accessor: 'edit'
-    },
+    // {
+    //     Header : 'Edit',
+    //     Cell: row => (
+    //         <div>
+    //             <button onClick={() => handleEdit(row)}>Edit</button>
+    //             <button onClick={() => handleDelete(row.id)}>Delete</button>
+    //         </div>)
+    // },
 ]
