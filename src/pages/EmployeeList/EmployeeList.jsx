@@ -23,10 +23,10 @@ export default function EmployeeList() {
       {modal && (
         <Modal
           modal={modal} onClose={() => setModal(false)}
-          title="Gestion de vos employées"
-          content="Employé ajouté avec succès !"
           backdropStyle={{ backgroundColor: 'rgba(21, 23, 43, 0.65)' }}
-          modalStyle={{ backgroundColor: '#303245', color: 'white'}}
+          modalStyle={{ backgroundColor: '#303245', color: 'white' }}
+          header='Gestion des employés'
+          text='Vous avez ajouté un employé !'
         />
       )}
     </>
