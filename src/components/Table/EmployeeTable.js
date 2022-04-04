@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTable, useSortBy, useGlobalFilter, usePagination, useRowSelect } from 'react-table/dist/react-table.development';
 
@@ -12,88 +12,49 @@ import GlobalFilter from './GlobalFilter';
 import { selectEmployee } from '../../utils/selectors';
 import { deleteEmployee, updateEmployee } from '../../reducers/employeeSlice';
 
+// Create an editable cell renderer
+const EditableCell = ({
+    value: initialValue,
+    // row: { index, id },
+    row: { index, original },
+    column: { id: property },
+    updateMyData, // This is a custom function that we supplied to our table instance
+    editableRowIndex // index of the row we requested for editing
+}) => {
+    // We need to keep and update the state of the cell normally
+    const [value, setValue] = useState(initialValue);
 
-export function EmployeeTable() {
+    const onChange = (e) => {
+        setValue(e.target.value);
+    };
 
-    const dispatch = useDispatch();
-    const Employees = useSelector(selectEmployee);
-    const [data, setData] = useState([]);
+    // We'll only update the external data when the input is blurred
+    const onBlur = () => {
+        updateMyData(original, property, value);
+    };
+
+    // If the initialValue is changed externall, sync it up with our state
+    React.useEffect(() => {
+        setValue(initialValue);
+    }, [initialValue]);
+
+    return index === editableRowIndex ? (
+        <input value={value} onChange={onChange} onBlur={onBlur} />
+    ) : (
+        <p>{value}</p>
+    );
+};
+
+// Set our editable cell renderer as the default Cell renderer
+const defaultColumn = {
+    Cell: EditableCell
+};
+
+export function Table({ columns, data, updateMyData, handleDeleteEmployee }) {
+
     // Local state for editable row index for custom hooks
     const [editableRowIndex, setEditableRowIndex] = useState(null);
-
-    // set the relation between redux Employees and local state for update
-    useEffect(() => {
-        // dispatch(initData())
-        setData(Employees)
-    }, [dispatch, Employees]);
-
-    // useMemo Hook the data ins't created on every render,
-    // Pass them on argument into the useTabe Hook
-    const columns = useMemo(() => COLUMNS, [])
-
-    // Create an editable cell renderer
-    const EditableCell = ({
-        value: initialValue,
-        row: { index },
-        column: { id },
-        updateMyData, // This is a custom function that we supplied to our table instance
-        editableRowIndex // index of the row we requested for editing
-    }) => {
-        // We need to keep and update the state of the cell normally
-        const [value, setValue] = useState(initialValue);
-
-        const onChange = (e) => {
-            setValue(e.target.value);
-        };
-
-        // We'll only update the external data when the input is blurred
-        const onBlur = () => {
-            updateMyData(index, id, value);
-        };
-
-        // If the initialValue is changed externall, sync it up with our state
-        React.useEffect(() => {
-            setValue(initialValue);
-        }, [initialValue]);
-
-        return index === editableRowIndex ? (
-            <input value={value} onChange={onChange} onBlur={onBlur} />
-        ) : (
-            <p>{value}</p>
-        );
-    };
-
-    // Set our editable cell renderer as the default Cell renderer
-    const defaultColumn = {
-        Cell: EditableCell
-    };
-
-    // Edit create action function with our global state
-    const handleEdit = (value) => {
-        // console.log(value)
-        dispatch(updateEmployee({ value }))
-    }
-    const handleDelete = (id) => {
-        // console.log(id)
-        dispatch(deleteEmployee({ id }))
-    }
-
-    // When our cell renderer calls updateMyData, we'll use
-    // the rowIndex, columnId and new value to update the original data
-    const updateMyData = (rowIndex, columnId, value) => {
-        // We also turn on the flag to not reset the page
-        setData(old =>
-            old.map((row, index) => {
-                if (index === rowIndex) {
-                    return {
-                        ...old[rowIndex],
-                        [columnId]: value,
-                    }
-                }
-                return row
-            })
-        )
-    }
+    const initialState = { hiddenColumns: ['id'] };
 
     // function to react table
     // const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = tableInstance
@@ -112,12 +73,12 @@ export function EmployeeTable() {
         pageCount,
         setPageSize,
         prepareRow,
-        selectedFlatRows,
         state,
         setGlobalFilter,
     } = useTable({
         columns,
         data,
+        initialState,
         defaultColumn,
         // updateMyData isn't part of the API, but anything we put into these options will
         // automatically be available on the instance.
@@ -133,7 +94,7 @@ export function EmployeeTable() {
         usePagination,
         useRowSelect,
         hooks => {
-            hooks.visibleColumns.push(columns => [
+            hooks.allColumns.push(columns => [
                 // other hooks such as selection hook
                 ...columns,
                 // edit hook
@@ -157,20 +118,13 @@ export function EmployeeTable() {
                                     } else {
                                         // request for saving the updated row
                                         setEditableRowIndex(null); // keep the row closed for edit after we finish updating it
-                                        const updatedRow = row.values;
-                                        const id = row.original.id;
-                                        console.log("updated row values:");
-                                        console.log(updatedRow);
-                                        console.log(id)
-                                        // call your updateRow API
-                                        handleEdit({...updatedRow, id})
                                     }
                                 }}
                             >
                                 {/* single action button supporting 2 modes */}
                                 {editableRowIndex !== row.index ? "Edit" : "Save"}
                             </button>
-                            <button onClick={() => handleDelete(row.original.id)}>Delete</button>
+                            <button onClick={() => handleDeleteEmployee(row.original.id)}>Delete</button>
                         </div>),
                 }
             ])
@@ -180,11 +134,11 @@ export function EmployeeTable() {
     // state local destructuré
     const { globalFilter } = state;
     const { pageIndex, pageSize } = state;
-    
+
     //console.log(data)
 
     return (
-        <>
+        <>  
             <div className='table__contentnav'>
                 {/* Select dropdown for Page size */}
                 <select value={pageSize} onChange={e => setPageSize(Number(e.target.value))}>
@@ -255,21 +209,61 @@ export function EmployeeTable() {
                     }
                 </tbody>
             </table>
-            {/* to verify the row value in the */}
-            <pre>
-                <code>
-                    {JSON.stringify(
-                        {
-                            selectedFlatRows: selectedFlatRows.map((row) => row.original),
-                        },
-                        null,
-                        2
-                    )}
-                </code>
-            </pre>
         </>
     )
 }
+
+// instance of Table
+export function EmployeeTable() {
+
+    // useMemo Hook the data ins't created on every render,
+    // Pass them on argument into the useTabe Hook
+    const dispatch = useDispatch();
+    const columns = useMemo(() => COLUMNS, [])
+
+    const updateMyData = (employee, property, value) => {
+        const employeeCopy = {...employee};
+        employeeCopy[property] = value;
+        dispatch(updateEmployee({ employeeCopy }))
+    }
+
+    const handleDeleteEmployee = (id) => {
+        dispatch(deleteEmployee({ id }))
+    }
+
+    return <Table
+        columns={columns}
+        data={useSelector(selectEmployee)}
+        updateMyData={updateMyData}
+        handleDeleteEmployee={handleDeleteEmployee}
+    />
+}
+
+    // const Employees = useSelector(selectEmployee);
+    // // Edit create action function with our global state
+    // const handleEdit = (value) => {
+    //     // console.log(value)
+    //     dispatch(updateEmployee({ value }))
+    // }
+
+
+    // // When our cell renderer calls updateMyData, we'll use
+    // // the rowIndex, columnId and new value to update the original data
+    // const updateMyData = (rowIndex, columnId, value) => {
+    //     // We also turn on the flag to not reset the page
+    //     setData(old =>
+    //         old.map((row, index) => {
+    //             if (index === rowIndex) {
+    //                 return {
+    //                     ...old[rowIndex],
+    //                     [columnId]: value,
+    //                 }
+    //             }
+    //             return row
+    //         })
+    //     )
+    // }
+
 
 // hooks => {
 //     hooks.visibleColumns.push(columns => [
@@ -292,4 +286,5 @@ export function EmployeeTable() {
 //         ),
 //       ...columns,
 //     ])
+
 //   }

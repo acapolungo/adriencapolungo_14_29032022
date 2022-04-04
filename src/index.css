@@ -17,6 +17,11 @@ body {
   max-width: 1024px;
 }
 
+.employee {
+  background-color: #737897;
+  height: 100vh;
+}
+
 .content__header {
   color: white;
   background-color: #15172b;

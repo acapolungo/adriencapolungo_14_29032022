@@ -2,6 +2,10 @@
 
 export const COLUMNS = [
     {
+        Header : 'id',
+        accessor: 'id',
+    },
+    {
         Header : 'First Name',
         accessor: 'firstName'
     },

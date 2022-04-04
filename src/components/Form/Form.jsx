@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { departments } from '../../assets/departments';
 import { states } from '../../assets/states';
 import { addEmployee } from '../../reducers/employeeSlice';
+import DatePicker from "react-datepicker";
 
 
 // { setModal, setModalContent }
@@ -12,8 +13,8 @@ export default function Form() {
     const dispatch = useDispatch();
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
-    const [birthdate, setBirthdate] = useState('');
-    const [startDate, setStartDate] = useState('');
+    const [birthdate, setBirthdate] = useState(new Date());
+    const [startDate, setStartDate] = useState(new Date());
     const [street, setStreet] = useState('');
     const [city, setCity] = useState('');
     const [zipcode, setZipcode] = useState('');
@@ -27,16 +28,18 @@ export default function Form() {
 
     let errorMessage = "";
 
+    const formatDate = (date) => `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
+
     const handleSubmitEmployee = (e) => {
         e.preventDefault();
 
         const isValid = () => {
-            const dateRegex = /^\d{4}-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])$/;
+            // const dateRegex = /^\d{4}-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])$/;
             const zipcodeRegex = /^(\d{5})?$/;
 
-            if (!dateRegex.test(birthdate)) {
+            if (!birthdate instanceof(Date)) {
                 return false
-            } else if (!dateRegex.test(startDate)) {
+            } else if (!startDate instanceof(Date)) {
                 return false
             } else if (!zipcodeRegex) {
                 return false
@@ -46,15 +49,15 @@ export default function Form() {
         }
 
         const employeeIsValid = isValid();
-        console.log(employeeIsValid)
+        //console.log(employeeIsValid)
         if (employeeIsValid) {
             // on envoie dans le state le formulaire complet
             dispatch(
                 addEmployee({
                     firstName: firstName,
                     lastName: lastName,
-                    birthdate: birthdate,
-                    startDate: startDate,
+                    birthdate: formatDate(birthdate),
+                    startDate: formatDate(startDate),
                     street: street,
                     city: city,
                     zipcode: zipcode,
@@ -95,7 +98,12 @@ export default function Form() {
                     </div>
                     <div className="form__container">
                         <span className='form__span'><label htmlFor="birthdate">Date of Birth</label></span>
-                        <input
+                        <DatePicker
+                         dateFormat="yyyy-MM-dd"
+                         selected={birthdate}
+                         onChange={(date) => setBirthdate(date)}
+                         />
+                        {/* <input
                             className='form__input'
                             name="birthdate"
                             id="birthdate"
@@ -103,9 +111,14 @@ export default function Form() {
                             value={birthdate}
                             onChange={(e) => setBirthdate(e.target.value)}
                             required
-                        />
+                        /> */}
                         <span className='form__span'><label htmlFor="startdate">Start Date</label></span>
-                        <input
+                         <DatePicker
+                         dateFormat="yyyy-MM-dd"
+                         selected={startDate}
+                         onChange={(date) => setStartDate(date)}
+                         />
+                        {/* <input
                             className='form__input'
                             name="startdate"
                             id="startdate"
@@ -113,7 +126,7 @@ export default function Form() {
                             value={startDate}
                             onChange={(e) => setStartDate(e.target.value)}
                             required
-                        />
+                        /> */}
                     </div>
                 </div>
                 <div className="form__content">

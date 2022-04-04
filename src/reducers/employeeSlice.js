@@ -4,23 +4,27 @@ import MOCK_Data from '../../src/assets/MOCK_DATA.json';
 // reduxToolkit fait la connexion aux devTool et la création du store
 export const employeeReducer = createSlice({
   name: "employee",
-  initialState: MOCK_Data,
+  initialState: {
+    data: MOCK_Data,
+    addEmployee: false,
+    deleteEmployee: false,
+  },
   reducers: {
     // state met à jour le state initial
     // action sont les data qu'on passe, update the payload to the user
     addEmployee(state, action) {
-      state.push(action.payload)
+      state.data.push(action.payload)
     },
     deleteEmployee(state, action) {
       const { id } = action.payload;
       //console.log(id)
-      return state.filter(element => element.id !== id);
+      return state.data.filter(element => element.id !== id);
     },
-    updateEmployee(state, action) {
-      // console.log(action.payload.value)
+    updateEmployee(state, {payload: {employeeCopy: updatedEmploye}}) {
+      // debugger
       // replace matched item and returns the array 
-      return state.map(item => {
-        return item.id === action.payload.value.id ? action.payload.value : item;
+      return state.data.map(item => {
+        return item.id === updatedEmploye.id ? updatedEmploye : item;
       })
     },
     initData(state, action) {

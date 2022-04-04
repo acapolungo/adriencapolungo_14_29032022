@@ -1,12 +1,14 @@
 import React, { useEffect, useRef } from 'react';
 import styles from '../Modal/modal.module.css';
 
+// header - which one can customize the header
+// text - which one can customize the text
+// modal - Boolean property which will decide wheather the modal is open or not.
 // modalStyle - With which one can customize the styling of visible modal window.
 // backdropStyle - With which one can customize the styling of the backdrop of modal window.
 // onClose - Event handler with which one can write logic to close the modal.
-// show - Boolean property which will decide wheather the modal is open or not.
 
-const Modal = ({ header, text, modal, onClose, modalStyle, backdropStyle }) => {
+const Modal = ({ zindex='z-10', header, text, modal, onClose, modalStyle, backdropStyle }) => {
     const modalRef = useRef(null);
     useEffect(
         () => {
@@ -23,7 +25,7 @@ const Modal = ({ header, text, modal, onClose, modalStyle, backdropStyle }) => {
     );
     return (
         <React.Fragment>
-            <div ref={modalRef} style={backdropStyle} className={`${styles.modal__wrap}`}>
+            <div ref={modalRef} style={backdropStyle} className={`${zindex} ${styles.modal__wrap}`}>
                 <button
                     onClick={onClose}
                     style={{ borderRadius: '50%', border: 'none', width: 40, height: 40, position: 'absolute', top: 20, right: 30, margin: '1rem', fontSize: '20px' }}
