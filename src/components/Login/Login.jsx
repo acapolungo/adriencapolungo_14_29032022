@@ -29,7 +29,7 @@ export default function Login() {
         <div className="form">
         <form className='login__form' onSubmit={(e) => handleSubmit(e)}>
         <h1 className="title">Se connecter</h1>
-        <div className="subtitle">vos identifiants</div>
+        <div className="subtitle">vos identifiants HRNet</div>
         <div className="input-container ic1">
           <input
           className="input"
@@ -69,30 +69,5 @@ export default function Login() {
         <button type="text" className='submit'>submit</button>
         </form>
       </div>
-
-        // <div classNameName='login'>
-        //     <form className='login__form' onSubmit={(e) => handleSubmit(e)}>
-        //         <h1>Se connecter</h1>
-        //         <input
-        //             type="name"
-        //             placeholder='Name'
-        //             value={name}
-        //             onChange={(e) => setName(e.target.value)}
-        //         />
-        //         <input
-        //             type="email"
-        //             placeholder='Email'
-        //             value={email}
-        //             onChange={(e) => setEmail(e.target.value)}
-        //         />
-        //         <input
-        //             type="password"
-        //             placeholder='Password'
-        //             value={password}
-        //             onChange={(e) => setPassword(e.target.value)}
-        //         />
-        //         <button type="submit" className='submit__btn'>valider</button>
-        //     </form>
-        // </div>
     )
 }

@@ -6,6 +6,8 @@ table {
     font-family: sans-serif;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
     background-color: #f1f1f1;
+    font-family: "Roboto Slab", serif;
+    border-radius: 10px;
 }
 
 .table {
@@ -21,8 +23,9 @@ table {
     font-family: sans-serif;
     min-width: 400px;
 }
+
 .table__title {
-    color: #dddddd;
+    color: #15172b;
     max-width: 1200px;
     margin: 0 auto;
     display: flex;
@@ -34,13 +37,22 @@ table {
 
 .table__contentnav {
     padding: 1rem;
-    background-color: #303245;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
+    background-color: #15172b;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
 }
 
 .table__contentnav span {
     color: #ffffff
+}
+
+.table__navcontainer:nth-child(1) {
+    width: 68%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .table thead {
@@ -55,17 +67,43 @@ table {
     text-align: left;
 }
 
+.table thead { 
+    border-radius: 20px;
+}
+
 .table th,
 .table td {
-    padding: 12px 15px;
+    padding: 12px 13px;
+    white-space: nowrap;
+    width: 155px;
+}
+
+.table th:nth-child(1) {
+    border-top-left-radius: 10px;
+}
+.table th:nth-last-child(1) {
+    border-top-right-radius: 10px;
+}
+
+.table td > input {
+    max-width: 80px;
+}
+.table td:nth-child(4) > input {
+    max-width: 150px;
 }
 
 .table tbody tr {
-    border-bottom: 1px solid #dddddd;
+    border-bottom: 1px solid #ffffff;
+}
+
+.table tbody tr:nth-of-type(odd) {
+    color: #303245;
+    background-color: #eaeef6;
 }
 
 .table tbody tr:nth-of-type(even) {
-    background-color: #f3f3f3;
+    background-color: #737897;
+    color: #ffffff;
 }
 
 .table tbody tr:last-of-type {
@@ -74,7 +112,53 @@ table {
 
 .table tbody tr.active-row {
     font-weight: bold;
-    color: #009879;
+    color: #508f82;
+}
+
+.table__search {
+    border-radius: 5px;
+    margin-left: 1rem;
+    width: 300px;
+    height: 100%;
+    padding: 0.2rem;
+    font-size: 1rem;
+    background-color: #c1c4d7;
+    color: #15172b;;
+    border: 1px solid #fff;
+    font-weight: 500;
+    outline: #fff;
+    font-weight: 500;
+}
+
+.table__number {
+    border-radius: 5px;
+    margin-left: 1rem;
+    height: 100%;
+    padding: 0.2rem;
+    font-size: 1rem;
+    background-color: #c1c4d7;
+    color: #15172b;;
+    border: 1px solid #fff;
+    font-weight: 500;
+    outline: #fff;
+}
+
+.action__btn {
+    background: none;
+	color: inherit;
+	border: none;
+	padding: 0;
+	font: inherit;
+	cursor: pointer;
+	outline: inherit;
+    font-size: 1rem;
+    margin-right: 5px;
+}
+
+.table__delbtn {
+    font-size: 1.1rem;
+    color: #cf2f2f;
+	cursor: pointer;
 }
 
 

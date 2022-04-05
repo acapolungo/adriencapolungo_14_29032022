@@ -1,6 +1,5 @@
 .modal__wrap {
     position: fixed;
-    display: block;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -12,12 +11,7 @@
     z-index: 100;
     overflow-x: hidden;
     background-color: rgba(31, 32, 41, 0.75);
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity 250ms 700ms ease;
-}
-
-.visible {
+    transition: all 300ms ease-in-out;
     pointer-events: auto;
     opacity: 1;
     transition: all 300ms ease-in-out;
@@ -45,9 +39,10 @@
     transform: scale(0.6);
     transition: opacity .2s 250ms ease, transform .2s 250ms ease;
     transform: scale(0);
+    position: relative;
 }
 
-.visible .modal {
+.modal {
     opacity: 1;
     transform: scale(1);
     transition: opacity .2s 250ms ease, transform .2s 250ms ease;

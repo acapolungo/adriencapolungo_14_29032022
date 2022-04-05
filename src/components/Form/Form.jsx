@@ -8,7 +8,7 @@ import DatePicker from "react-datepicker";
 
 
 // { setModal, setModalContent }
-export default function Form() {
+export default function Form({ openModal }) {
 
     const dispatch = useDispatch();
     const [firstName, setFirstName] = useState('');
@@ -25,33 +25,36 @@ export default function Form() {
             + Math.random().toString(16).slice(2)
             + Date.now().toString(16).slice(4);
     };
+    const [error, setError] = useState(null);
 
-    let errorMessage = "";
-
-    const formatDate = (date) => `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
-
+    const toDoubleDigit = (int) => int.toString().length <= 1 ? `0${int}` : int.toString();
+    const formatDate = (date) => `${date.getFullYear()}-${toDoubleDigit(date.getMonth() + 1)}-${toDoubleDigit(date.getDate())}`
     const handleSubmitEmployee = (e) => {
         e.preventDefault();
 
         const isValid = () => {
-            // const dateRegex = /^\d{4}-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])$/;
-            const zipcodeRegex = /^(\d{5})?$/;
+            console.log(firstName === "")
 
             if (!birthdate instanceof(Date)) {
                 return false
             } else if (!startDate instanceof(Date)) {
                 return false
-            } else if (!zipcodeRegex) {
+            } else if (firstName === "" || lastName === "" || street === "" || city === ""){
+                setError("Please fill in all the fields of the form.")
+                return false
+            } else if (!zipcode.match(/\b\d{5}\b/g)) {
+                setError("Please fill 5 digit number")
                 return false
             } else {
+                setError("")
                 return true
             }
         }
 
         const employeeIsValid = isValid();
-        //console.log(employeeIsValid)
+
         if (employeeIsValid) {
-            // on envoie dans le state le formulaire complet
+            // on envoie dans le state les informations
             dispatch(
                 addEmployee({
                     firstName: firstName,
@@ -65,17 +68,18 @@ export default function Form() {
                     department: department,
                     id: employeeId(),
                 })
-            );
+            ); 
+            openModal('Un employé à été créé')
         }
     }
 
     return (
         <>
             <form className="formEmployee">
-                <h2 className="form__title">Create Employee</h2>
+                <h2 className="form__title">HRNet - Create Employee</h2>
                 <div className="form__content">
                     <div className="form__container">
-                        <span className='form__span'><label htmlFor="firstName">First Name</label></span>
+                        <span className='form__span' ><label htmlFor="firstName">First Name</label></span>
                         <input
                             className='form__input'
                             name="firstName"
@@ -97,7 +101,7 @@ export default function Form() {
                         />
                     </div>
                     <div className="form__container">
-                        <span className='form__span'><label htmlFor="birthdate">Date of Birth</label></span>
+                        <span className='form__span form__span-date'><label htmlFor="birthdate">Date of Birth</label></span>
                         <DatePicker
                          dateFormat="yyyy-MM-dd"
                          selected={birthdate}
@@ -112,7 +116,7 @@ export default function Form() {
                             onChange={(e) => setBirthdate(e.target.value)}
                             required
                         /> */}
-                        <span className='form__span'><label htmlFor="startdate">Start Date</label></span>
+                        <span className='form__span form__span-date'><label htmlFor="startdate">Start Date</label></span>
                          <DatePicker
                          dateFormat="yyyy-MM-dd"
                          selected={startDate}
@@ -208,8 +212,8 @@ export default function Form() {
                     </div>
                 </div>
 
-                <button className="form__button" onClick={(e) => handleSubmitEmployee(e)} >Save </button>
-                <div className="form__error">{errorMessage}</div>
+                <button className="form__button" onClick={handleSubmitEmployee} >Save </button>
+                <div className="form__error">{error}</div>
             </form>
         </>
     );

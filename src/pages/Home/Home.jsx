@@ -1,11 +1,10 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { selectUser } from '../../utils/selectors';
+import { Navigate } from 'react-router-dom';
 
 // components
-import Form from '../../components/Form/Form';
 import Login from '../../components/Login/Login';
-import Logout from '../../components/Logout/Logout';
 
 export default function Home() {
 
@@ -15,9 +14,8 @@ export default function Home() {
         <main className='main'>
             {user ?
                 <>
-                    <Logout />
-                    <h1>Current Employees</h1>
-                    <Form />
+                    {/* <Logout /> */}
+                    <Navigate to='/employeelist' />
                 </>
                 :
                 <Login />

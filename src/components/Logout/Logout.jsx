@@ -16,9 +16,14 @@ export default function Logout() {
     }
 
     return (
-        <div className="logout">
-            <h1 className='user__name'>Bonjour <span>{user.name} !</span></h1>
-            <button className='logout__button' onClick={(e) => handleLogout(e)} >Se déconnecter</button>
+        <div className="logout"> 
+            {user ?
+                <>
+                    <h1 className='user__name'>Bonjour <span>{user.name} !</span></h1>
+                    <button className='logout__button' onClick={(e) => handleLogout(e)} >Se déconnecter</button>
+                </>
+                : ""}
+
         </div>
     )
 }

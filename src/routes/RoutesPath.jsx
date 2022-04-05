@@ -9,9 +9,8 @@ export default function RoutesPath() {
 
   return (
     <Routes>
-      <Route path="/test" element={<Home/>} />
-      {/* /employeelist */}
-      <Route path="/" element={<EmployeeList />} />
+      <Route path="/" element={<Home/>} />
+      <Route path="/employeelist" element={<EmployeeList />} />
       {/* <Route path="/*" element={<Error />} /> */}
     </Routes>
   )

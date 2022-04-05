@@ -5,10 +5,12 @@ import { useTable, useSortBy, useGlobalFilter, usePagination, useRowSelect } fro
 import '../Table/table.css';
 import { HiChevronDoubleUp } from "react-icons/hi";
 import { HiChevronDoubleDown } from "react-icons/hi";
+import { FiEdit } from 'react-icons/fi';
+import { RiSaveFill } from 'react-icons/ri';
+import { MdDeleteForever } from 'react-icons/md';
 
 import { COLUMNS } from './Columns';
 import GlobalFilter from './GlobalFilter';
-// import { Checkbox } from './Checkbox';
 import { selectEmployee } from '../../utils/selectors';
 import { deleteEmployee, updateEmployee } from '../../reducers/employeeSlice';
 
@@ -99,17 +101,17 @@ export function Table({ columns, data, updateMyData, handleDeleteEmployee }) {
                 ...columns,
                 // edit hook
                 {
-                    accessor: "edit",
-                    id: "edit",
+                    accessor: "Action",
+                    id: "action",
                     // The header can use the table's getToggleAllRowsSelectedProps method
                     // to render a checkbox
-                    Header: 'Edit',
+                    Header: 'Action',
                     // The cell can use the individual row's getToggleRowSelectedProps method
                     Cell: ({ row, setEditableRowIndex, editableRowIndex }) => (
                         // handleEdit(row)
                         <div>
                             <button
-                                className="action-button"
+                                className="action__btn"
                                 onClick={() => {
                                     const currentIndex = row.index;
                                     if (editableRowIndex !== currentIndex) {
@@ -122,9 +124,9 @@ export function Table({ columns, data, updateMyData, handleDeleteEmployee }) {
                                 }}
                             >
                                 {/* single action button supporting 2 modes */}
-                                {editableRowIndex !== row.index ? "Edit" : "Save"}
+                                {editableRowIndex !== row.index ? <FiEdit /> : <RiSaveFill />}
                             </button>
-                            <button onClick={() => handleDeleteEmployee(row.original.id)}>Delete</button>
+                            <MdDeleteForever className='table__delbtn' onClick={() => handleDeleteEmployee(row.original.id) } />
                         </div>),
                 }
             ])
@@ -138,40 +140,44 @@ export function Table({ columns, data, updateMyData, handleDeleteEmployee }) {
     //console.log(data)
 
     return (
-        <>  
-            <div className='table__contentnav'>
-                {/* Select dropdown for Page size */}
-                <select value={pageSize} onChange={e => setPageSize(Number(e.target.value))}>
-                    {
-                        [10, 25, 50].map(pageSize => (
-                            <option key={pageSize} value={pageSize} >
-                                Show {pageSize}
-                            </option>
-                        ))
-                    }
-                </select>
-                <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} />
-                <span className='table__pagination'>
-                    Page{''} <strong>{pageIndex + 1} of {pageOptions.length}</strong>{''}
-                </span>
-                <span>
-                    | Go to page: {' '}
-                    <input type='number' defaultValue={pageIndex + 1} onChange={(e) => {
-                        const pageNumber = e.target.value ? Number(e.target.value) - 1 : 0
-                        gotoPage(pageNumber)
-                    }}
-                        style={{ width: '50px' }}
-                    ></input>
-                </span>
-                <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>{'<<'}</button>
-                <button onClick={() => previousPage()} disabled={!canPreviousPage}>Previous</button>
-                <button onClick={() => nextPage()} disabled={!canNextPage}>Next</button>
-                <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>{'>>'}</button>
-            </div>
+        <>
+            <section className='table__contentnav'>
+                <div className="table__navcontainer">
+                    {/* Select dropdown for Page size */}
+                    <select value={pageSize} onChange={e => setPageSize(Number(e.target.value))}>
+                        {
+                            [10, 25, 50].map(pageSize => (
+                                <option key={pageSize} value={pageSize} >
+                                    Show {pageSize}
+                                </option>
+                            ))
+                        }
+                    </select>
+                    <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} />
+                    <span className='table__pagination'>
+                        Page{''} <strong>{pageIndex + 1} of {pageOptions.length}</strong>{''}
+                    </span>
+                    <span>
+                        | Go to page: {' '}
+                        <input className='table__number' type='number' defaultValue={pageIndex + 1} onChange={(e) => {
+                            const pageNumber = e.target.value ? Number(e.target.value) - 1 : 0
+                            gotoPage(pageNumber)
+                        }}
+                            style={{ width: '50px' }}
+                        ></input>
+                    </span>
+                </div>
+                <div className="table__navcontainer">
+                    <button className='table__btn--goback' onClick={() => gotoPage(0)} disabled={!canPreviousPage}>{'<<'}</button>
+                    <button className='table__btn--previous' onClick={() => previousPage()} disabled={!canPreviousPage}>Previous</button>
+                    <button className='table__btn--next' onClick={() => nextPage()} disabled={!canNextPage}>Next</button>
+                    <button className='table__btn--gonext' onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>{'>>'}</button>
+                </div>
+            </section>
 
             <table {...getTableProps()}>
                 {/* Header section */}
-                <thead>
+                <thead >
                     {
                         headerGroups.map((headerGroup) => (
                             <tr {...headerGroup.getHeaderGroupProps()}>
@@ -214,7 +220,7 @@ export function Table({ columns, data, updateMyData, handleDeleteEmployee }) {
 }
 
 // instance of Table
-export function EmployeeTable() {
+export function EmployeeTable({ openModal }) {
 
     // useMemo Hook the data ins't created on every render,
     // Pass them on argument into the useTabe Hook
@@ -222,13 +228,15 @@ export function EmployeeTable() {
     const columns = useMemo(() => COLUMNS, [])
 
     const updateMyData = (employee, property, value) => {
-        const employeeCopy = {...employee};
+        const employeeCopy = { ...employee };
         employeeCopy[property] = value;
         dispatch(updateEmployee({ employeeCopy }))
+        openModal('Vous avez mis à jour un employé')
     }
 
     const handleDeleteEmployee = (id) => {
         dispatch(deleteEmployee({ id }))
+        openModal('Vous avez supprimé un employé')
     }
 
     return <Table
@@ -238,53 +246,3 @@ export function EmployeeTable() {
         handleDeleteEmployee={handleDeleteEmployee}
     />
 }
-
-    // const Employees = useSelector(selectEmployee);
-    // // Edit create action function with our global state
-    // const handleEdit = (value) => {
-    //     // console.log(value)
-    //     dispatch(updateEmployee({ value }))
-    // }
-
-
-    // // When our cell renderer calls updateMyData, we'll use
-    // // the rowIndex, columnId and new value to update the original data
-    // const updateMyData = (rowIndex, columnId, value) => {
-    //     // We also turn on the flag to not reset the page
-    //     setData(old =>
-    //         old.map((row, index) => {
-    //             if (index === rowIndex) {
-    //                 return {
-    //                     ...old[rowIndex],
-    //                     [columnId]: value,
-    //                 }
-    //             }
-    //             return row
-    //         })
-    //     )
-    // }
-
-
-// hooks => {
-//     hooks.visibleColumns.push(columns => [
-//       // Let's make a column for selection
-//       {
-//         id: '',
-//         // The header can use the table's getToggleAllRowsSelectedProps method
-//         // to render a checkbox
-//         Header: ({ getToggleAllPageRowsSelectedProps }) => (
-//           <div>
-//             <Checkbox {...getToggleAllPageRowsSelectedProps()} />
-//           </div>
-//         ),
-//         // The cell can use the individual row's getToggleRowSelectedProps method
-//         // to the render a checkbox
-//         Cell: ({ row }) => (
-//           <div>
-//             <Checkbox {...row.getToggleRowSelectedProps()} />
-//           </div>
-//         ),
-//       ...columns,
-//     ])
-
-//   }

@@ -4,6 +4,12 @@
   box-sizing: border-box;
 }
 
+#root {
+  height: 100vh;
+  
+  background: #d0d4e9;
+}
+
 body {
   margin: 0;
   font-family: "Roboto Slab", serif;
@@ -15,18 +21,15 @@ body {
 .main {
   margin: 0 auto;
   max-width: 1024px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
 }
 
 .employee {
-  background-color: #737897;
-  height: 100vh;
-}
-
-.content__header {
-  color: white;
-  background-color: #15172b;
-  height: 10%;
-  padding: 15px;
+  background-color: #d0d4e9;
+  padding-bottom: 3rem;
 }
 
 .content__text {
