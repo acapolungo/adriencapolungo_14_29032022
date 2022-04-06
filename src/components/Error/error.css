@@ -1,0 +1,30 @@
+.error {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.error__title {
+    width: 50vh;
+    font-size: 9rem;
+    color: #303245;
+    text-align: center;
+}
+
+.error__title span {
+    font-size: 11rem;
+    font-weight: 700;
+    color: white;
+    background-color: #303245;
+    padding: 0 1rem;
+}
+
+.error__link {
+    font-size: 2.1rem;
+    text-decoration: none;
+    margin-top: 2rem;
+    color: #08d;
+}

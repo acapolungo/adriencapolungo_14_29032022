@@ -4,6 +4,7 @@ import { Routes, Route } from 'react-router-dom';
 // système de rooting de base
 import Home from '../pages/Home/Home';
 import EmployeeList from '../pages/EmployeeList/EmployeeList';
+import Error from '../components/Error/error';
 
 export default function RoutesPath() {
 
@@ -11,7 +12,7 @@ export default function RoutesPath() {
     <Routes>
       <Route path="/" element={<Home/>} />
       <Route path="/employeelist" element={<EmployeeList />} />
-      {/* <Route path="/*" element={<Error />} /> */}
+      <Route path="/*" element={<Error />} />
     </Routes>
   )
 }
