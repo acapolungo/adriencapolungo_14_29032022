@@ -3,7 +3,12 @@ import { login } from '../../reducers/userSlice';
 import { useDispatch } from 'react-redux';
 import "./login.css"
 
-
+/**
+ * the login form retrieves the user's info && action sends it to the state
+ * 
+ * @component
+ * @return { Login }
+ */
 export default function Login() {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
@@ -12,7 +17,6 @@ export default function Login() {
     const dispatch = useDispatch();
 
     const handleSubmit = (e) => {
-        // pas de realoading
         e.preventDefault();
 
         dispatch(

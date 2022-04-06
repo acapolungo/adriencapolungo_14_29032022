@@ -2,6 +2,12 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import '../Error/error.css';
 
+/**
+ * Setting Error in routes
+ * 
+ * @component
+ * @return { Error }
+ */
 export default function Error() {
     return (
         <>
