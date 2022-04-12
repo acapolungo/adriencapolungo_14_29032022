@@ -161,5 +161,27 @@ table {
 	cursor: pointer;
 }
 
+.table__btn--next, .table__btn--previous, .table__btn--gonext, .table__btn--goback {
+    border: 1px solid #fff;
+    background: #c1c4d7;
+    padding: 0.2rem;
+    border-radius: 5px;
+    color: #15172b;
+	font: inherit;
+	cursor: pointer;
+	outline: inherit;
+    font-size: 1rem;
+    font-weight: 600;
+    margin-right: 5px;
+}
+
+.table__select {
+    border: 1px solid #fff;
+    border-radius: 5px;
+    padding: 0.2rem;
+    background-color: #c1c4d7;
+    color: #15172b;
+}
+
 
 

@@ -1,4 +1,32 @@
-import "./form.css"
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: Form/Form.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: Form/Form.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import "./form.css"
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { departments } from '../../assets/departments';
@@ -8,8 +36,7 @@ import DatePicker from "react-datepicker";
 
 
 /**
- * The form retrieves the employee's info && action sends it to the state
- * 
+ * The form retrieves the employee's info &amp;&amp; action sends it to the state
  * @component
  * @param { string } openModal - displays the text in the modal
  * @return { Form }
@@ -33,7 +60,7 @@ export default function Form({ openModal }) {
     };
     const [error, setError] = useState(null);
 
-    const toDoubleDigit = (int) => int.toString().length <= 1 ? `0${int}` : int.toString();
+    const toDoubleDigit = (int) => int.toString().length &lt;= 1 ? `0${int}` : int.toString();
     const formatDate = (date) => `${date.getFullYear()}-${toDoubleDigit(date.getMonth() + 1)}-${toDoubleDigit(date.getDate())}`
     const handleSubmitEmployee = (e) => {
         e.preventDefault();
@@ -79,13 +106,13 @@ export default function Form({ openModal }) {
     }
 
     return (
-        <>
-            <form className="formEmployee">
-                <h2 className="form__title">HRNet - Create Employee</h2>
-                <div className="form__content">
-                    <div className="form__container">
-                        <span className='form__span' ><label htmlFor="firstName">First Name</label></span>
-                        <input
+        &lt;>
+            &lt;form className="formEmployee">
+                &lt;h2 className="form__title">HRNet - Create Employee&lt;/h2>
+                &lt;div className="form__content">
+                    &lt;div className="form__container">
+                        &lt;span className='form__span' >&lt;label htmlFor="firstName">First Name&lt;/label>&lt;/span>
+                        &lt;input
                             className='form__input'
                             name="firstName"
                             id="firstName"
@@ -94,8 +121,8 @@ export default function Form({ openModal }) {
                             onChange={(e) => setFirstName(e.target.value)}
                             required
                         />
-                        <span className='form__span'><label htmlFor="lastName">Last Name</label></span>
-                        <input
+                        &lt;span className='form__span'>&lt;label htmlFor="lastName">Last Name&lt;/label>&lt;/span>
+                        &lt;input
                             className='form__input'
                             name="lastName"
                             id="lastName"
@@ -104,15 +131,15 @@ export default function Form({ openModal }) {
                             onChange={(e) => setLastName(e.target.value)}
                             required
                         />
-                    </div>
-                    <div className="form__container">
-                        <span className='form__span form__span-date'><label htmlFor="birthdate">Date of Birth</label></span>
-                        <DatePicker
+                    &lt;/div>
+                    &lt;div className="form__container">
+                        &lt;span className='form__span form__span-date'>&lt;label htmlFor="birthdate">Date of Birth&lt;/label>&lt;/span>
+                        &lt;DatePicker
                          dateFormat="yyyy-MM-dd"
                          selected={birthdate}
                          onChange={(date) => setBirthdate(date)}
                          />
-                        {/* <input
+                        {/* &lt;input
                             className='form__input'
                             name="birthdate"
                             id="birthdate"
@@ -121,13 +148,13 @@ export default function Form({ openModal }) {
                             onChange={(e) => setBirthdate(e.target.value)}
                             required
                         /> */}
-                        <span className='form__span form__span-date'><label htmlFor="startdate">Start Date</label></span>
-                         <DatePicker
+                        &lt;span className='form__span form__span-date'>&lt;label htmlFor="startdate">Start Date&lt;/label>&lt;/span>
+                         &lt;DatePicker
                          dateFormat="yyyy-MM-dd"
                          selected={startDate}
                          onChange={(date) => setStartDate(date)}
                          />
-                        {/* <input
+                        {/* &lt;input
                             className='form__input'
                             name="startdate"
                             id="startdate"
@@ -136,14 +163,14 @@ export default function Form({ openModal }) {
                             onChange={(e) => setStartDate(e.target.value)}
                             required
                         /> */}
-                    </div>
-                </div>
-                <div className="form__content">
-                    {/* <hr className="form__line" /> */}
-                    <h2 className="form__title">Adress</h2>
-                    <div className="form__street">
-                        <span className='form__span form__span--adress'><label htmlFor="street">Street</label></span>
-                        <input
+                    &lt;/div>
+                &lt;/div>
+                &lt;div className="form__content">
+                    {/* &lt;hr className="form__line" /> */}
+                    &lt;h2 className="form__title">Adress&lt;/h2>
+                    &lt;div className="form__street">
+                        &lt;span className='form__span form__span--adress'>&lt;label htmlFor="street">Street&lt;/label>&lt;/span>
+                        &lt;input
                             className='form__input'
                             name="street"
                             id="street"
@@ -152,11 +179,11 @@ export default function Form({ openModal }) {
                             onChange={(e) => setStreet(e.target.value)}
                             required
                         />
-                    </div>
+                    &lt;/div>
 
-                    <div className="form__container">
-                        <span className='form__span form__span--adress'><label htmlFor="city">City</label></span>
-                        <input
+                    &lt;div className="form__container">
+                        &lt;span className='form__span form__span--adress'>&lt;label htmlFor="city">City&lt;/label>&lt;/span>
+                        &lt;input
                             className='form__input'
                             name="city"
                             id="city"
@@ -165,8 +192,8 @@ export default function Form({ openModal }) {
                             onChange={(e) => setCity(e.target.value)}
                             required
                         />
-                        <span className='form__span form__span--adress'><label htmlFor="state">State</label></span>
-                        <select
+                        &lt;span className='form__span form__span--adress'>&lt;label htmlFor="state">State&lt;/label>&lt;/span>
+                        &lt;select
                             className='form__input form__input--select'
                             name="state"
                             id="state"
@@ -175,18 +202,18 @@ export default function Form({ openModal }) {
                             required
                         >
                             {states.map(elt =>
-                                <option
+                                &lt;option
                                     key={`element-${elt.abbreviation}`}
                                     value={elt.abbreviation}
                                 >
                                     {elt.name}
-                                </option>
+                                &lt;/option>
                             )}
-                        </select>
-                    </div>
-                    <div className="form__container">
-                        <span className='form__span form__span--adress'><label htmlFor="zipcode">Zipcode</label></span>
-                        <input
+                        &lt;/select>
+                    &lt;/div>
+                    &lt;div className="form__container">
+                        &lt;span className='form__span form__span--adress'>&lt;label htmlFor="zipcode">Zipcode&lt;/label>&lt;/span>
+                        &lt;input
                             className='form__input'
                             name="zipcode"
                             id="zipcode"
@@ -196,8 +223,8 @@ export default function Form({ openModal }) {
                             onChange={(e) => setZipcode(e.target.value)}
                             required
                         />
-                        <span className='form__span form__span--adress'><label htmlFor="department">Department</label></span>
-                        <select
+                        &lt;span className='form__span form__span--adress'>&lt;label htmlFor="department">Department&lt;/label>&lt;/span>
+                        &lt;select
                             className='form__input form__input--select'
                             name="department"
                             id="department"
@@ -206,20 +233,42 @@ export default function Form({ openModal }) {
                             required
                         >
                             {departments.map(elt =>
-                                <option
+                                &lt;option
                                     key={`element-${elt.abbreviation}`}
                                     value={elt.abbreviation}
                                 >
                                     {elt.name}
-                                </option>
+                                &lt;/option>
                             )}
-                        </select>
-                    </div>
-                </div>
+                        &lt;/select>
+                    &lt;/div>
+                &lt;/div>
 
-                <button className="form__button" onClick={handleSubmitEmployee} >Save </button>
-                <div className="form__error">{error}</div>
-            </form>
-        </>
+                &lt;button className="form__button" onClick={handleSubmitEmployee} >Save &lt;/button>
+                &lt;div className="form__error">{error}&lt;/div>
+            &lt;/form>
+        &lt;/>
     );
-}
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="module.html#.exports">exports</a></li></ul><h3>Global</h3><ul><li><a href="global.html#Modal">Modal</a></li><li><a href="global.html#Table">Table</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.10</a> on Wed Apr 06 2022 14:13:55 GMT+0200 (heure d’été d’Europe centrale)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

@@ -1,13 +1,17 @@
 import React from 'react';
 import styles from '../Modal/modal.module.css';
 
-// header - which one can customize the header
-// text - which one can customize the text
-// modal - Boolean property which will decide wheather the modal is open or not.
-// modalStyle - With which one can customize the styling of visible modal window.
-// backdropStyle - With which one can customize the styling of the backdrop of modal window.
-// onClose - Event handler with which one can write logic to close the modal.
-
+/**
+ * the Modal display header and text, you can customize style
+ * 
+ * @param { string } header - which one can customize the header
+ * @param { string } text - which one can customize the text
+ * @param { boolean } closeModal - Boolean property which will decide wheather the modal is open or not.
+ * @param { string } headerStyle - With which one can customize the styling of header modal.
+ * @param { string } modalStyle - With which one can customize the styling of visible modal window.
+ * @param { string } backdropStyle - With which one can customize the styling of the backdrop of modal window.
+ * @return { Modal }
+ */
 const Modal = ({header, text, closeModal, headerStyle, modalStyle, backdropStyle }) => {
 
     return (

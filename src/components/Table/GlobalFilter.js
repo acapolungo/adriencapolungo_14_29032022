@@ -1,5 +1,12 @@
 import React from 'react'
 
+/**
+ * filtering function
+ * 
+ * @param { string } filter
+ * @param { string } setFilter
+ * @return { GlobalFilter }
+ */
 export default function GlobalFilter({ filter, setFilter }) {
   return (
     <span>
