@@ -5,15 +5,18 @@ export const userReducer = createSlice({
   name: "user",
   initialState: {
     user: null,
+    status: false,
   },
   reducers: {
       // state met à jour le state initial
       // action sont les data qu'on passe, update the payload to the user
       login(state, action) {
         state.user = action.payload;
+        state.status = true;
       },
       logout(state) {
         state.user = null;
+        state.status = false;
       },
   },
 });

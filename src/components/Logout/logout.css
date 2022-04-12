@@ -5,6 +5,7 @@
     align-items: center;
     height: 5vh;
     padding: 0 2rem;
+    background: #303245;
   }
   
   .logout__button {

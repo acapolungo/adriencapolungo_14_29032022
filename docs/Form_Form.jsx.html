@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: Form/Form.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: Form/Form.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import "./form.css"
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { departments } from '../../assets/departments';
+import { states } from '../../assets/states';
+import { addEmployee } from '../../reducers/employeeSlice';
+import DatePicker from "react-datepicker";
+
+
+/**
+ * The form retrieves the employee's info &amp;&amp; action sends it to the state
+ * @component
+ * @param { string } openModal - displays the text in the modal
+ * @return { Form }
+ */
+export default function Form({ openModal }) {
+
+    const dispatch = useDispatch();
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [birthdate, setBirthdate] = useState(new Date());
+    const [startDate, setStartDate] = useState(new Date());
+    const [street, setStreet] = useState('');
+    const [city, setCity] = useState('');
+    const [zipcode, setZipcode] = useState('');
+    const [stateName, setStateName] = useState(states[0].abbreviation);
+    const [department, setDepartment] = useState(departments[0].abbreviation);
+    const employeeId = () => {
+        return String.fromCharCode(Math.floor(Math.random() * 26) + 97)
+            + Math.random().toString(16).slice(2)
+            + Date.now().toString(16).slice(4);
+    };
+    const [error, setError] = useState(null);
+
+    const toDoubleDigit = (int) => int.toString().length &lt;= 1 ? `0${int}` : int.toString();
+    const formatDate = (date) => `${date.getFullYear()}-${toDoubleDigit(date.getMonth() + 1)}-${toDoubleDigit(date.getDate())}`
+    const handleSubmitEmployee = (e) => {
+        e.preventDefault();
+
+        const isValid = () => {
+
+            if (!birthdate instanceof(Date)) {
+                return false
+            } else if (!startDate instanceof(Date)) {
+                return false
+            } else if (firstName === "" || lastName === "" || street === "" || city === ""){
+                setError("Please fill in all the fields of the form.")
+                return false
+            } else if (!zipcode.match(/\b\d{5}\b/g)) {
+                setError("Please fill 5 digit number")
+                return false
+            } else {
+                setError("")
+                return true
+            }
+        }
+
+        const employeeIsValid = isValid();
+
+        if (employeeIsValid) {
+            // on envoie dans le state les informations
+            dispatch(
+                addEmployee({
+                    firstName: firstName,
+                    lastName: lastName,
+                    birthdate: formatDate(birthdate),
+                    startDate: formatDate(startDate),
+                    street: street,
+                    city: city,
+                    zipcode: zipcode,
+                    stateName: stateName,
+                    department: department,
+                    id: employeeId(),
+                })
+            ); 
+            openModal('Un employé à été créé')
+        }
+    }
+
+    return (
+        &lt;>
+            &lt;form className="formEmployee">
+                &lt;h2 className="form__title">HRNet - Create Employee&lt;/h2>
+                &lt;div className="form__content">
+                    &lt;div className="form__container">
+                        &lt;span className='form__span' >&lt;label htmlFor="firstName">First Name&lt;/label>&lt;/span>
+                        &lt;input
+                            className='form__input'
+                            name="firstName"
+                            id="firstName"
+                            type="text"
+                            value={firstName}
+                            onChange={(e) => setFirstName(e.target.value)}
+                            required
+                        />
+                        &lt;span className='form__span'>&lt;label htmlFor="lastName">Last Name&lt;/label>&lt;/span>
+                        &lt;input
+                            className='form__input'
+                            name="lastName"
+                            id="lastName"
+                            type="text"
+                            value={lastName}
+                            onChange={(e) => setLastName(e.target.value)}
+                            required
+                        />
+                    &lt;/div>
+                    &lt;div className="form__container">
+                        &lt;span className='form__span form__span-date'>&lt;label htmlFor="birthdate">Date of Birth&lt;/label>&lt;/span>
+                        &lt;DatePicker
+                         dateFormat="yyyy-MM-dd"
+                         selected={birthdate}
+                         onChange={(date) => setBirthdate(date)}
+                         />
+                        {/* &lt;input
+                            className='form__input'
+                            name="birthdate"
+                            id="birthdate"
+                            type="date"
+                            value={birthdate}
+                            onChange={(e) => setBirthdate(e.target.value)}
+                            required
+                        /> */}
+                        &lt;span className='form__span form__span-date'>&lt;label htmlFor="startdate">Start Date&lt;/label>&lt;/span>
+                         &lt;DatePicker
+                         dateFormat="yyyy-MM-dd"
+                         selected={startDate}
+                         onChange={(date) => setStartDate(date)}
+                         />
+                        {/* &lt;input
+                            className='form__input'
+                            name="startdate"
+                            id="startdate"
+                            type="date"
+                            value={startDate}
+                            onChange={(e) => setStartDate(e.target.value)}
+                            required
+                        /> */}
+                    &lt;/div>
+                &lt;/div>
+                &lt;div className="form__content">
+                    {/* &lt;hr className="form__line" /> */}
+                    &lt;h2 className="form__title">Adress&lt;/h2>
+                    &lt;div className="form__street">
+                        &lt;span className='form__span form__span--adress'>&lt;label htmlFor="street">Street&lt;/label>&lt;/span>
+                        &lt;input
+                            className='form__input'
+                            name="street"
+                            id="street"
+                            type="text"
+                            value={street}
+                            onChange={(e) => setStreet(e.target.value)}
+                            required
+                        />
+                    &lt;/div>
+
+                    &lt;div className="form__container">
+                        &lt;span className='form__span form__span--adress'>&lt;label htmlFor="city">City&lt;/label>&lt;/span>
+                        &lt;input
+                            className='form__input'
+                            name="city"
+                            id="city"
+                            type="text"
+                            value={city}
+                            onChange={(e) => setCity(e.target.value)}
+                            required
+                        />
+                        &lt;span className='form__span form__span--adress'>&lt;label htmlFor="state">State&lt;/label>&lt;/span>
+                        &lt;select
+                            className='form__input form__input--select'
+                            name="state"
+                            id="state"
+                            value={stateName}
+                            onChange={(e) => setStateName(e.target.value)}
+                            required
+                        >
+                            {states.map(elt =>
+                                &lt;option
+                                    key={`element-${elt.abbreviation}`}
+                                    value={elt.abbreviation}
+                                >
+                                    {elt.name}
+                                &lt;/option>
+                            )}
+                        &lt;/select>
+                    &lt;/div>
+                    &lt;div className="form__container">
+                        &lt;span className='form__span form__span--adress'>&lt;label htmlFor="zipcode">Zipcode&lt;/label>&lt;/span>
+                        &lt;input
+                            className='form__input'
+                            name="zipcode"
+                            id="zipcode"
+                            type="number"
+                            max="99999"
+                            value={zipcode}
+                            onChange={(e) => setZipcode(e.target.value)}
+                            required
+                        />
+                        &lt;span className='form__span form__span--adress'>&lt;label htmlFor="department">Department&lt;/label>&lt;/span>
+                        &lt;select
+                            className='form__input form__input--select'
+                            name="department"
+                            id="department"
+                            value={department}
+                            onChange={(e) => setDepartment(e.target.value)}
+                            required
+                        >
+                            {departments.map(elt =>
+                                &lt;option
+                                    key={`element-${elt.abbreviation}`}
+                                    value={elt.abbreviation}
+                                >
+                                    {elt.name}
+                                &lt;/option>
+                            )}
+                        &lt;/select>
+                    &lt;/div>
+                &lt;/div>
+
+                &lt;button className="form__button" onClick={handleSubmitEmployee} >Save &lt;/button>
+                &lt;div className="form__error">{error}&lt;/div>
+            &lt;/form>
+        &lt;/>
+    );
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="module.html#.exports">exports</a></li></ul><h3>Global</h3><ul><li><a href="global.html#Modal">Modal</a></li><li><a href="global.html#Table">Table</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.10</a> on Wed Apr 06 2022 14:13:55 GMT+0200 (heure d’été d’Europe centrale)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

@@ -4,6 +4,12 @@ import { logout } from '../../reducers/userSlice';
 import { selectUser } from '../../utils/selectors';
 import "./logout.css"
 
+/**
+ * the Logout display user's name and logout button
+ * 
+ * @component
+ * @return { Logout }
+ */
 export default function Logout() {
 
     const user = useSelector(selectUser);
@@ -16,9 +22,14 @@ export default function Logout() {
     }
 
     return (
-        <div className="logout">
-            <h1 className='user__name'>Bonjour <span>{user.name} !</span></h1>
-            <button className='logout__button' onClick={(e) => handleLogout(e)} >Se déconnecter</button>
+        <div className="logout"> 
+            {user ?
+                <>
+                    <h1 className='user__name'>Bonjour <span>{user.name} !</span></h1>
+                    <button className='logout__button' onClick={(e) => handleLogout(e)} >Se déconnecter</button>
+                </>
+                : ""}
+
         </div>
     )
 }
