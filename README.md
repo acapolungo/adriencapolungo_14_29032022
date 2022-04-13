@@ -2,6 +2,9 @@
 
 Convertion de l'appli existante [HRnet](https://github.com/OpenClassrooms-Student-Center/P12_Front-end) utilisant jQuery vers React.
 
+## Visulaisez l'application HRnet :
+[lien vers HRNnet](https://hrnetpublic.netlify.app/)
+
 ## Converted jQuery plugins :
 
     Modal.
